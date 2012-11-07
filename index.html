@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Modern UI</title>
+<script>
+opera.extension.onmessage = function(e){
+	if(e.data == "getTabs")	e.source.postMessage(JSON.stringify(opera.extension.tabs.getAll()));
+	else //clicked at a tab:
+		opera.extension.tabs.getAll()[e.data].focus();
+}
+</script>
+</head>
+</html>

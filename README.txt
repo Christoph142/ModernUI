@@ -1,0 +1,1 @@
+Modern UI is an extension for Opera
