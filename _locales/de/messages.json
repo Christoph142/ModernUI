@@ -1,0 +1,6 @@
+{
+	"lang" :							{ "message" : "de" },
+	"description" :						{ "message" : "Windows 8 Modern UI" },
+	"by" :								{ "message" : "von" },
+	"footer" : 							{ "message" : "Thanks for installing this extension. You can contact me at any time for feedback and questions." }
+}

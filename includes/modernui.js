@@ -6,25 +6,32 @@
 // @exclude http://www.megalab.it/*
 // ==/UserScript==
 
-window.opera.addEventListener("AfterEvent.DOMContentLoaded", function(){
-	if(window.self != window.top) return; // only treat main page not iframes, ads, etc.
+window.addEventListener("DOMContentLoaded", function(){
+	if(window.self !== window.top) return; // only treat main page not iframes, ads, etc.
 	
 	inject_css();
 	add_UI();
 	
 	on_fullscreen();
 	window.addEventListener("resize", on_fullscreen, false);
-	opera.extension.postMessage("getTabs");
-	opera.extension.onmessage = function(e){ update_tabs(JSON.parse(e.data)); }
+	
+	chrome.extension.sendMessage({data:"getTabs"}, function(response){ // get settings (filled with default values) from background.js
+		alert(response.data);
+	});
+	/*chrome.extension.onMessage.addListener( function(request, sender, sendResponse){
+		if(request.data === "huhu")	alert("yeah");
+	});*/
 	//window.addEventListener("fullscreenchange",function(){ alert("changed"); },false);
 },false);
 
-function on_fullscreen(){
-	if(window.screen.height === window.outerHeight) document.getElementById("modern_ui").style.display = "inline";
-	else document.getElementById("modern_ui").style.display = "none";
+function on_fullscreen()
+{
+	if(window.screen.height === window.innerHeight) document.getElementById("modern_ui").style.display = "inline";
+	else											document.getElementById("modern_ui").style.display = null;
 }
 
-function inject_css(){
+function inject_css()
+{
 	var style = document.createElement("style");
 	style.setAttribute("type","text/css");
 	style.innerHTML = "#modern_ui{ position:fixed; top:-199px; left:0; width:100%; height:200px; z-index:2147483647; border:none; padding:0; margin:0; background:#CC0F16; display:none;} #modern_ui:hover{ top:0px; }"+
@@ -32,7 +39,8 @@ function inject_css(){
 	document.getElementsByTagName("head")[0].appendChild(style);
 }
 
-function add_UI(){
+function add_UI()
+{
 	var modern_ui = document.createElement("div");
 	modern_ui.id = "modern_ui";
 	modern_ui.innerHTML = "<div style='width:30px; height:30px; background:#000;' onclick='window.location.reload();'>r</div><input id='modern_ui_addressbar' type='text' style='width:100%; position:absolute; bottom:0px;'>";
@@ -43,9 +51,10 @@ function add_UI(){
 	},false);
 }
 
-function update_tabs(tabs){
-	//alert(JSON.stringify(tabs[0]));
-	for(var nr in tabs){
+function update_tabs(tabs)
+{
+	for(var nr in tabs)
+	{
 		var tab = document.createElement("div");
 		tab.id = "MUI_"+nr;//tabs[nr]["id"];
 		tab.innerHTML = "<img src='"+tabs[nr]["faviconUrl"]+"'>";
