@@ -2,10 +2,10 @@
 	"name"				: "ModernUI",
 	"description"		: "__MSG_description__",
 	"developer"			: {"name" : "Christoph D."},
-	"homepage_url"		: "http://my.opera.com/christoph142/blog",
+	"homepage_url"		: "https://christoph142.wordpress.com",
 	
 	"default_locale"	: "en",
-	"version"			: "0.1",
+	"version"			: "0.2",
 	"icons"				: { "128": "images/icon@2x.png" },
 	
 	"content_scripts" :
@@ -18,7 +18,7 @@
 	
 	"background"		: {"scripts": ["background.js"]},
   
-	"permissions"		: ["contextMenus", "storage"],
+	"permissions"		: ["tabs"],
 	
 	"manifest_version"	: 2
 }
